@@ -219,3 +219,306 @@ car2.DisplayInfo(); // Output: Car: 2022 Chevrolet Camaro
 Console.WriteLine($"Total Cars Created: {Car.TotalCars}"); // Output: Total Cars Created: 2
 ```
 
+## Types of Attributes (Fields) :
+
+Attributes are variables declared inside a class. They represent the state or data of an object. You can classify them
+by:
+
+### a. By Access Modifiers:
+
+- **Public**: Accessible from anywhere.
+- **Private**: Accessible only within the class.
+- **Protected**: Accessible within the class and by derived classes.
+- **Internal**: Accessible within the same assembly.
+- **Protected Internal**: Accessible within the same assembly and by derived classes.
+
+**Example of Access Modifiers:**
+```csharp
+public class Car
+{
+	public string Make { get; set; } // Public attribute
+	private string Model { get; set; } // Private attribute
+	protected int Year { get; set; } // Protected attribute
+	internal string Color { get; set; } // Internal attribute
+	protected internal string EngineType { get; set; } // Protected internal attribute
+	
+}
+```
+### b. By behavior:
+
+- **Static**: Belongs to the class itself rather than to any specific object. It is shared among all instances of the class.
+- **Instance**: Belongs to a specific object. Each instance of the class has its own copy of instance attributes.
+
+**Example of Static and Instance Attributes:**
+```csharp
+public class Car
+{
+	public static int TotalCars { get; private set; } // Static attribute
+	public string Make { get; set; } // Instance attribute
+	public string Model { get; set; }
+	public int Year { get; set; }
+	// Constructor
+	public Car(string make, string model, int year)
+	{
+		Make = make;
+		Model = model;
+		Year = year;
+		TotalCars++; // Increment total cars when a new car is created
+	}
+}
+```
+
+## Type of Methods :
+Methods are functions defined within a class that operate on the attributes of the class. They can be classified by:
+
+### a. Instance Methods:
+- Instance methods operate on instance attributes and can access both instance and static attributes.
+- They require an instance of the class to be called.
+
+**Example of Instance Method:**
+```csharp
+
+public class Car
+{
+	public string Make { get; set; }
+	public string Model { get; set; }
+	public int Year { get; set; }
+	// Instance method
+	public void DisplayInfo()
+	{
+		Console.WriteLine($"Car: {Year} {Make} {Model}");
+	}
+}
+
+// Creating an object of the Car class
+Car myCar = new Car { Make = "Toyota", Model = "Corolla", Year = 2020 };
+myCar.DisplayInfo(); // Output: Car: 2020 Toyota Corolla
+```
+### b. Static Methods:
+- Static methods operate on static attributes and can be called without creating an instance of the class.
+- They are often used for utility functions or factory methods.
+- They cannot access instance attributes directly.
+- They can only access static attributes and methods.
+
+**Example of Static Method:**
+```csharp
+public class Car
+{
+	public static int TotalCars { get; private set; } // Static attribute
+	public string Make { get; set; }
+	public string Model { get; set; }
+	public int Year { get; set; }
+	// Static method to get total cars created
+	public static int GetTotalCars()
+	{
+		return TotalCars;
+	}
+	// Constructor
+	public Car(string make, string model, int year)
+	{
+		Make = make;
+		Model = model;
+		Year = year;
+		TotalCars++; // Increment total cars when a new car is created
+	}
+}
+
+// Creating objects of the Car class
+Car car1 = new Car("Ford", "Mustang", 2021);
+Car car2 = new Car("Chevrolet", "Camaro", 2022);
+Console.WriteLine($"Total Cars Created: {Car.GetTotalCars()}"); // Output: Total Cars Created: 2
+```
+
+### c. Accessor Methods:
+
+Accessor methods are used to get or set the values of private attributes. They are often referred to as **getters** and **setters**.
+
+- **Getter**: A method that retrieves the value of a private attribute.
+- **Setter**: A method that sets the value of a private attribute.
+
+**Example of Accessor Methods:**
+```csharp
+public class Car
+{
+	private string make; // Private attribute
+	
+	// Getter for Make
+	public string GetMake()
+	{
+		return make;
+	}
+	// Setter for Make
+	public void SetMake(string value)
+	{
+		make = value;
+	}
+	
+}
+```
+
+### Or using properties :
+
+Properties are a more concise way to define accessors in C#. They allow you to define getters and setters in a single line.
+
+**Example of Properties:**
+```csharp
+public class Car
+{
+	public string Make { get; set; } // Auto-implemented property
+	public string Model { get; set; }
+	public int Year { get; set; }
+	
+	// Property with custom getter and setter
+	private string color;
+	public string Color
+	{
+		get { return color; }
+		set { color = value; }
+	}
+}
+
+// Creating an object of the Car class
+
+Car myCar = new Car
+{
+	Make = "Toyota",
+	Model = "Corolla",
+	Year = 2020,
+	Color = "Red"
+};
+
+Console.WriteLine($"Car: {myCar.Year} {myCar.Make} {myCar.Model}, Color: {myCar.Color}");
+// Output: Car: 2020 Toyota Corolla, Color: Red
+```
+
+## Why Use Properties?
+
+- Control how values are accessed or modified.
+- Apply validation logic in set.
+- Allow read-only or write-only access.
+- Hide internal data structures.
+
+## Types of Properties
+
+### 1. Auto-Implemented Properties:
+Auto-implemented properties are a shorthand way to define properties without explicitly declaring a backing field. The compiler automatically creates a private field for you.
+
+**Example of Auto-Implemented Property:**
+
+```csharp
+public class Car
+{
+	public string Make { get; set; } // Auto-implemented property
+	
+}
+```
+
+
+
+### 2. Read-Only Properties:
+Read-only properties allow you to define a property that can only be read, not modified. They are useful for exposing calculated values or constants.
+
+
+**Example of Read-Only Property:**
+```csharp
+public class Car
+{
+	private string make; // Private backing field for Make property
+	
+	// Read-only property
+	public string Make
+	{
+		get { return make; }
+	}
+	
+	
+}
+```
+### 3. Write-Only Properties:
+
+Write-only properties allow you to define a property that can only be set, not read. They are less common but can be useful in certain scenarios.
+
+**Example of Write-Only Property:**
+```csharp
+public class Car
+{
+	private string make; // Private backing field for Make property
+	
+	// Write-only property
+	public string Make
+	{
+		set { make = value; }
+	}
+	
+
+```
+
+
+### 4. Property with Validation Logic:
+
+You can add validation logic in the setter of a property to ensure that only valid values are assigned.
+
+**Example of Property with Validation Logic:**
+
+```csharp
+public class Car
+{
+	private string make;
+	public string Make
+	{
+		get { return make; }
+		set
+		{
+			if (string.IsNullOrEmpty(value))
+			{
+				throw new ArgumentException("Make cannot be null or empty.");
+			}
+			make = value;
+		}
+	}
+	
+	
+
+```
+
+### d. Constructor Methods:
+
+Constructor methods are special methods that are called when an object of a class is created. They are used to initialize the object's attributes.
+
+**Example of Constructor Method:**
+```csharp
+
+public class Car
+{
+	public string Make { get; set; }
+
+	
+	// Constructor method
+	public Car(string make)
+	{
+		Make = make;
+		
+	}
+}
+```
+
+### e. Destructor Methods:
+
+Destructor methods are special methods that are called when an object is about to be destroyed. They are used to clean up resources or perform any necessary finalization.
+
+**Example of Destructor Method:**
+```csharp
+
+public class Car
+{
+	public string Make { get; set; }
+	
+	// Destructor method
+	~Car()
+	{
+		// Cleanup code here
+		Console.WriteLine("Car object is being destroyed.");
+	}
+}
+```
+
