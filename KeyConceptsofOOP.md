@@ -120,3 +120,38 @@ public class Program
 
 
 
+
+### Method Overriding and virtual/override Keywords
+
+When a method in the base class is marked with the virtual keyword, it can be overridden in the
+derived class using the override keyword. This allows the derived class to provide its own
+implementation of the method.
+
+```csharp
+public class Animal
+{
+	public virtual void Speak()
+	{
+		Console.WriteLine("Animal speaks");
+	}
+}
+public class Dog : Animal
+{
+	public override void Speak()
+	{
+		Console.WriteLine("Dog barks");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Animal animal = new Animal();
+		animal.Speak(); // Output: Animal speaks
+		Dog dog = new Dog();
+		dog.Speak(); // Output: Dog barks
+		Animal animalDog = new Dog();
+		animalDog.Speak(); // Output: Dog barks (polymorphism)
+	}
+}
+```
