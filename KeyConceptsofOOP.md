@@ -257,3 +257,36 @@ public class Program
 	}
 }
 ```
+### Abstract Classes and Inheritance
+
+An abstract class can provide some method implementations and force derived classes to
+implement specific methods using abstract methods. Abstract methods do not have an
+implementation in the base class and must be implemented in derived classes.
+
+```csharp
+public abstract class Animal
+{
+	public abstract void Speak(); // Abstract method with no implementation
+	public void Eat() // Regular method with implementation
+	{
+		Console.WriteLine("Animal eats");
+	}
+}
+public class Dog : Animal
+{
+	public override void Speak() // Implementing the abstract method
+	{
+		Console.WriteLine("Dog barks");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Dog dog = new Dog();
+		dog.Speak(); // Output: Dog barks
+		dog.Eat(); // Output: Animal eats
+	}
+}
+```
+
