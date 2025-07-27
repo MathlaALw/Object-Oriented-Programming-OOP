@@ -90,6 +90,33 @@ class Animal
 
 
 
+### base Keyword 
+
+The `base` keyword is used to access members of the base class from a derived class. It can be used to call base class constructors or methods.
+```csharp
+
+public class Animal
+{
+	public void Speak() { Console.WriteLine("Animal speaks"); }
+}
+public class Dog : Animal
+{
+	public void Speak()
+	{
+		base.Speak(); // Calls the Speak method of the base class
+		Console.WriteLine("Dog barks");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Dog dog = new Dog();
+		dog.Speak(); // Output: Animal speaks \n Dog barks
+	}
+}
+```
+
 
 
 
