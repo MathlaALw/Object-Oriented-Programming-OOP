@@ -290,3 +290,160 @@ public class Program
 }
 ```
 
+## 3. Polymorphism 
+
+Polymorphism allows objects of different classes to be treated as objects of a common base class.
+It enables a single interface to represent different underlying forms (data types).
+
+In C#, polymorphism is mainly achieved through method overriding, method overloading, and
+interfaces. There are two types of polymorphism:
+
+1. **Compile-time Polymorphism**: Achieved through method overloading and operator overloading.
+1. **Run-time Polymorphism**: Achieved through method overriding using virtual and override keywords.
+
+### Compile-time Polymorphism (Static Binding)
+
+Compile-time polymorphism is achieved through method overloading and operator overloading.
+
+#### Method Overloading
+Method overloading allows multiple methods with the same name but different parameters (type, number, or order) to exist in the same class.
+```csharp
+public class MathOperations
+{
+	public int Add(int a, int b)
+	{
+		return a + b;
+	}
+	public double Add(double a, double b)
+	{
+		return a + b;
+	}
+	public int Add(int a, int b, int c)
+	{
+		return a + b + c;
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		MathOperations math = new MathOperations();
+		Console.WriteLine(math.Add(2, 3)); // Output: 5
+		Console.WriteLine(math.Add(2.5, 3.5)); // Output: 6.0
+		Console.WriteLine(math.Add(1, 2, 3)); // Output: 6
+	}
+}
+```
+
+#### Operator Overloading
+
+Operator overloading allows you to define custom behavior for operators (like +, -, *, etc.) for user-defined types (classes or structs).
+```csharp
+public class ComplexNumber
+{
+	public double Real { get; set; }
+	public double Imaginary { get; set; }
+	public ComplexNumber(double real, double imaginary)
+	{
+		Real = real;
+		Imaginary = imaginary;
+	}
+	public static ComplexNumber operator +(ComplexNumber c1, ComplexNumber c2)
+	{
+		return new ComplexNumber(c1.Real + c2.Real, c1.Imaginary + c2.Imaginary);
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		ComplexNumber c1 = new ComplexNumber(1, 2);
+		ComplexNumber c2 = new ComplexNumber(3, 4);
+		ComplexNumber result = c1 + c2; // Uses overloaded + operator
+		Console.WriteLine($"Result: {result.Real} + {result.Imaginary}i"); // Output: Result: 4 + 6i
+	}
+}
+```
+
+### Run-time Polymorphism (Dynamic Binding)
+Run-time polymorphism occurs when the method that needs to be invoked is determined during
+runtime rather than compile time. It is achieved through:
+1. Method overriding using virtual and override keywords
+	- Method overriding occurs when a derived class has a method with the same name and signature
+as in the base class. The base class method must be marked with the virtual keyword, and the
+derived class overrides this method using the override keyword.
+
+	- ### Example of Method Overriding
+```csharp
+			// Base class representing a general bank account
+class BankAccount
+{
+ protected double balance;
+ public BankAccount(double initialBalance)
+ {
+ balance = initialBalance;
+ }
+ // Virtual method that can be overridden in derived classes
+ public virtual void Withdraw(double amount)
+ {
+ balance -= amount;
+ Console.WriteLine($"{amount:C} withdrawn. New balance: {balance:C}");
+ }
+ public void ShowBalance()
+ { Console.WriteLine($"Balance: {balance:C}"); }
+}
+// Derived class representing a savings account with withdrawal limits
+class SavingsAccount : BankAccount
+{
+ public SavingsAccount(double initialBalance) : base(initialBalance) { }
+ // Override the Withdraw method to implement specific logic for savings accounts
+ public override void Withdraw(double amount)
+ {
+ if (amount > balance)
+ {
+ Console.WriteLine("Insufficient funds in Savings Account.");
+ }
+ else
+ {
+ base.Withdraw(amount); // Use the base class Withdraw method
+ }
+ }
+}
+// Derived class representing a current account with overdraft limit
+class CurrentAccount : BankAccount
+{
+ private double overdraftLimit;
+ public CurrentAccount(double initialBalance, double overdraftLimit) : base(initialBalance)
+ {
+ this.overdraftLimit = overdraftLimit;
+ }
+ // Override the Withdraw method to allow overdraft
+ public override void Withdraw(double amount)
+ {
+ if (amount > balance + overdraftLimit)
+ {
+ Console.WriteLine("Withdrawal exceeds overdraft limit.");
+ }
+ else
+ {
+ base.Withdraw(amount);
+ }
+ }
+}
+class Program
+{
+ static void Main()
+ {
+ BankAccount savings = new SavingsAccount(1000);
+ BankAccount current = new CurrentAccount(1000, 500);
+ savings.Withdraw(1500); // Output: Insufficient funds in Savings Account.
+ current.Withdraw(1500); // Output: $1,500.00 withdrawn. New balance: $-500.00
+ }
+}
+ ```
+
+
+2. Interfaces and their implementations
+
+
+
