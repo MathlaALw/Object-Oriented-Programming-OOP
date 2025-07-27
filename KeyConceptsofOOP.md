@@ -192,3 +192,39 @@ public class Program
 }
 ```
 
+
+### Hiding Base Class Members
+
+Sometimes, you may want to provide a new implementation in the derived class but not override
+the base class method. In this case, you can use the new keyword to hide the base class member.
+
+```csharp
+public class Animal
+{
+	public void Speak()
+	{
+		Console.WriteLine("Animal speaks");
+	}
+}
+public class Dog : Animal
+{
+	public new void Speak()
+	{
+		Console.WriteLine("Dog barks");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Animal animal = new Animal();
+		animal.Speak(); // Output: Animal speaks
+		Dog dog = new Dog();
+		dog.Speak(); // Output: Dog barks
+		Animal animalDog = new Dog();
+		animalDog.Speak(); // Output: Animal speaks (base class method called)
+	}
+}
+```
+
+
