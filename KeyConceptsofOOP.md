@@ -155,3 +155,40 @@ public class Program
 	}
 }
 ```
+
+### Sealing Classes and Methods
+
+A class can be sealed using the `sealed` keyword, which prevents it from being inherited. A method can also be sealed to prevent further overriding in derived classes.
+```csharp
+public class Animal
+{
+	public virtual void Speak()
+	{
+		Console.WriteLine("Animal speaks");
+	}
+}
+public sealed class Dog : Animal
+{
+	public override void Speak()
+	{
+		Console.WriteLine("Dog barks");
+	}
+}
+public class Cat : Animal
+{
+	// Cannot override Speak() here because Dog is sealed
+	public override void Speak()
+	{
+		Console.WriteLine("Cat meows");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Animal animal = new Dog();
+		animal.Speak(); // Output: Dog barks
+	}
+}
+```
+
