@@ -445,5 +445,213 @@ class Program
 
 2. Interfaces and their implementations
 
+	- An interface defines a contract that classes can implement. When a class implements an interface, it must provide implementations for all the methods defined in the interface.
+
+```csharp
+public interface IShape
+{
+	double Area();
+}
+public class Circle : IShape
+{
+	private double radius;
+	public Circle(double radius)
+	{
+		this.radius = radius;
+	}
+	public double Area()
+	{
+		return Math.PI * radius * radius;
+	}
+}
+public class Rectangle : IShape
+{
+	private double width;
+	private double height;
+	public Rectangle(double width, double height)
+	{
+		this.width = width;
+		this.height = height;
+	}
+	public double Area()
+	{
+		return width * height;
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		IShape circle = new Circle(5);
+		IShape rectangle = new Rectangle(4, 6);
+		Console.WriteLine($"Circle Area: {circle.Area()}"); // Output: Circle Area: 78.53981633974483
+		Console.WriteLine($"Rectangle Area: {rectangle.Area()}"); // Output: Rectangle Area: 24
+	}
+}
+```
+
+
+#### Implementing an Interface
+
+When a class implements an interface, it must provide concrete implementations for all the methods defined in the interface. This allows for polymorphic behavior, where different classes can be treated as instances of the same interface type.
+```csharp
+public interface IAnimal
+{
+	void Speak();
+}
+public class Dog : IAnimal
+{
+	public void Speak()
+	{
+		Console.WriteLine("Dog barks");
+	}
+}
+public class Cat : IAnimal
+{
+	public void Speak()
+	{
+		Console.WriteLine("Cat meows");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		IAnimal dog = new Dog();
+		IAnimal cat = new Cat();
+		dog.Speak(); // Output: Dog barks
+		cat.Speak(); // Output: Cat meows
+	}
+}
+```
+
+#### using Multiple Interfaces
+A class can implement multiple interfaces, allowing it to inherit behaviors from multiple sources. This is useful for creating classes that need to conform to multiple contracts.
+```csharp
+public interface IFlyable
+{
+	void Fly();
+}
+public interface ISwimmable
+{
+	void Swim();
+}
+public class Duck : IFlyable, ISwimmable
+{
+	public void Fly()
+	{
+		Console.WriteLine("Duck flies");
+	}
+	public void Swim()
+	{
+		Console.WriteLine("Duck swims");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Duck duck = new Duck();
+		duck.Fly(); // Output: Duck flies
+		duck.Swim(); // Output: Duck swims
+	}
+}
+```
+
+#### Interface Inheritance
+Interfaces can inherit from other interfaces, allowing for more complex and flexible designs. A class that implements a derived interface must implement all methods from both the base and derived interfaces.
+```csharp
+public interface IAnimal
+{
+	void Speak();
+}
+public interface IFlyingAnimal : IAnimal
+{
+	void Fly();
+}
+public class Bird : IFlyingAnimal
+{
+	public void Speak()
+	{
+		Console.WriteLine("Bird chirps");
+	}
+	public void Fly()
+	{
+		Console.WriteLine("Bird flies");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		IFlyingAnimal bird = new Bird();
+		bird.Speak(); // Output: Bird chirps
+		bird.Fly(); // Output: Bird flies
+	}
+}
+```
+
+#### Explicit Interface Implementation
+Sometimes, a class may implement multiple interfaces that have methods with the same name. In such cases, you can use explicit interface implementation to avoid ambiguity.
+```csharp
+public interface IAnimal
+{
+	void Speak();
+}
+public interface IPet
+{
+	void Speak();
+}
+public class Dog : IAnimal, IPet
+{
+	void IAnimal.Speak()
+	{
+		Console.WriteLine("Dog barks (IAnimal)");
+	}
+	void IPet.Speak()
+	{
+		Console.WriteLine("Dog barks (IPet)");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Dog dog = new Dog();
+		((IAnimal)dog).Speak(); // Output: Dog barks (IAnimal)
+		((IPet)dog).Speak(); // Output: Dog barks (IPet)
+	}
+}
+```
+#### Interface Properties and Indexers
+
+Interfaces can also define properties and indexers, allowing classes that implement the interface to provide access to data in a consistent manner.
+```csharp
+public interface IEmployee
+{
+	string Name { get; set; }
+	int Age { get; set; }
+}
+public class Manager : IEmployee
+{
+	public string Name { get; set; }
+	public int Age { get; set; }
+	public Manager(string name, int age)
+	{
+		Name = name;
+		Age = age;
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		IEmployee manager = new Manager("Alice", 30);
+		Console.WriteLine($"Name: {manager.Name}, Age: {manager.Age}"); // Output: Name: Alice, Age: 30
+		manager.Age = 31;
+		Console.WriteLine($"Updated Age: {manager.Age}"); // Output: Updated Age: 31
+	}
+}
+```
 
 
