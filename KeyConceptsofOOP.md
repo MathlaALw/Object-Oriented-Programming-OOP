@@ -228,3 +228,32 @@ public class Program
 ```
 
 
+### Constructor Inheritance
+
+When a derived class object is created, the base class constructor is called first, followed by the
+derived class constructor. If the base class has a parameterized constructor, the derived class
+must use the base keyword to pass arguments to it.
+
+```csharp
+public class Animal
+{
+	public Animal(string name)
+	{
+		Console.WriteLine($"Animal created: {name}");
+	}
+}
+public class Dog : Animal
+{
+	public Dog(string name) : base(name)
+	{
+		Console.WriteLine($"Dog created: {name}");
+	}
+}
+public class Program
+{
+	public static void Main()
+	{
+		Dog dog = new Dog("Buddy"); // Output: Animal created: Buddy \n Dog created: Buddy
+	}
+}
+```
